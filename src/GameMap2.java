@@ -10,43 +10,34 @@ public class GameMap2 extends JPanel implements ActionListener{
 	private int person_x = 750;
 	private int person_y = 280;  
 	public JLabel character;
-	public JLabel pein;
-	public JLabel data_s;
-	public JLabel computer;
-	public JLabel monster4;
-	public JLabel monster5;
-	public JLabel monster6;
+	public JLabel skeleton1;
+	public JLabel skeleton2;
+	public JLabel wizard;
+	public JLabel soilder;
+	public JLabel archer;
+	public JLabel pirate;
 	int x_up  = 0;
 	int x_lower = 0;
 	int y_up =0;
 	int y_lower = 0;
-	
-	ImageIcon down_1 = new ImageIcon("image/MapPlayer/正面1.png"); 
-	ImageIcon down_2 = new ImageIcon("image/MapPlayer/正面2.png"); 
-	ImageIcon down_3 = new ImageIcon("image/MapPlayer/正面3.png"); 
-	ImageIcon up_1 = new ImageIcon("image/MapPlayer/背面1.png"); 
-	ImageIcon up_2 = new ImageIcon("image/MapPlayer/背面2.png"); 
-	ImageIcon up_3 = new ImageIcon("image/MapPlayer/背面3.png"); 
-	ImageIcon right_1 = new ImageIcon("image/MapPlayer/向右1.png"); 
-	ImageIcon right_2 = new ImageIcon("image/MapPlayer/向右2.png"); 
-	ImageIcon right_3 = new ImageIcon("image/MapPlayer/向右3.png"); 
-	ImageIcon left_1 = new ImageIcon("image/MapPlayer/向左1.png"); 
-	ImageIcon left_2 = new ImageIcon("image/MapPlayer/向左2.png"); 
-	ImageIcon left_3 = new ImageIcon("image/MapPlayer/向左3.png"); 
-	
-	
-	
-	//angry
-
-	
-	
+	ImageIcon down_1 = new ImageIcon("image/MapPlayer/front1.png"); 
+	ImageIcon down_2 = new ImageIcon("image/MapPlayer/front2.png"); 
+	ImageIcon down_3 = new ImageIcon("image/MapPlayer/front3.png"); 
+	ImageIcon up_1 = new ImageIcon("image/MapPlayer/back1.png"); 
+	ImageIcon up_2 = new ImageIcon("image/MapPlayer/back2.png"); 
+	ImageIcon up_3 = new ImageIcon("image/MapPlayer/back3.png"); 
+	ImageIcon right_1 = new ImageIcon("image/MapPlayer/right1.png"); 
+	ImageIcon right_2 = new ImageIcon("image/MapPlayer/right2.png"); 
+	ImageIcon right_3 = new ImageIcon("image/MapPlayer/right3.png"); 
+	ImageIcon left_1 = new ImageIcon("image/MapPlayer/left1.png"); 
+	ImageIcon left_2 = new ImageIcon("image/MapPlayer/left2.png"); 
+	ImageIcon left_3 = new ImageIcon("image/MapPlayer/left3.png"); 
 	private Status MyPlayer;
 	private Timer listenEnd=new Timer();
 	private JFrame mainField;
 	private int Mymoney;
 	private Battle battle;
 	private Store st;
-	private Tutorial tutorial;
 	private boolean monster_win[] = new boolean[7];
 	private int  check_money = 0;
 	private int count_boss = 0;
@@ -56,20 +47,17 @@ public class GameMap2 extends JPanel implements ActionListener{
 	
 	
 	public GameMap2(JFrame jFrame,Status p) {
-		//吃傳進來jframe
+		//���脖�frame
 		for(int i = 0 ; i < 7 ; ++i) {
 			monster_win[i] = false;
 		}
 
 		this.mainField=jFrame;
-		//吃mainwindow的Player
+		//��ainwindow��layer
 		this.MyPlayer=p;
 		st = new Store(this);
 		mainField.add(st);
 		setSize(Toolkit.getDefaultToolkit().getScreenSize());
-
-		tutorial = new Tutorial(this);
-		mainField.add(tutorial);
 		
 		
 		
@@ -108,7 +96,7 @@ public class GameMap2 extends JPanel implements ActionListener{
 					//if(person_x + 40 );
 				}
 				the_TA_locaton(person_x,person_y);
-				the_professors(person_x,person_y);
+				enterBattle(person_x,person_y);
 			}
 
 			public void keyReleased(KeyEvent arg0) {
@@ -124,7 +112,7 @@ public class GameMap2 extends JPanel implements ActionListener{
 			
 		});
 		setFocusable(true);
-		setVisible(false);
+		setVisible(true);
 		requestFocusInWindow();
 	
 	
@@ -152,33 +140,33 @@ public class GameMap2 extends JPanel implements ActionListener{
 	private void button_location() {		
 		pp.setImage(pp.getImage().getScaledInstance(250, 162,Image.SCALE_DEFAULT ));
 		da.setImage(da.getImage().getScaledInstance(250, 162,Image.SCALE_DEFAULT ));
-		pein = new JLabel(pp);		
-		data_s = new JLabel(da);	
-		computer = new JLabel(com);	
-		monster4=new JLabel(m4);
-		monster5=new JLabel(m5);
-		monster6=new JLabel(m6);
-		pein.setSize(200, 160);
-		pein.setLocation(500, 80);
-		data_s.setSize(200, 160);
-		data_s.setLocation(40, 60);
+		skeleton1 = new JLabel(pp);		
+		skeleton2 = new JLabel(da);	
+		wizard = new JLabel(com);	
+		soilder=new JLabel(m4);
+		archer=new JLabel(m5);
+		pirate=new JLabel(m6);
+		skeleton1.setSize(200, 160);
+		skeleton1.setLocation(500, 80);
+		skeleton2.setSize(200, 160);
+		skeleton2.setLocation(40, 60);
 		
 		
-		computer.setSize(200,160);
-		computer.setLocation(280, 490);
+		wizard.setSize(200,160);
+		wizard.setLocation(280, 490);
 		
-		monster4.setSize(200,160);
-		monster5.setSize(200,160);
-		monster6.setSize(200,160);
-		monster4.setLocation(270,0);
-		monster5.setLocation(950,450);
-		monster6.setLocation(570,500);
+		soilder.setSize(200,160);
+		archer.setSize(200,160);
+		pirate.setSize(200,160);
+		soilder.setLocation(270,0);
+		archer.setLocation(950,450);
+		pirate.setLocation(570,500);
 		
 		
 		character = new JLabel(down_1);
 		//character.setContentAreaFilled(false);
 		character.setSize(60,70);
-		character.setLocation(person_x, person_y);      //再對照的時候就 x+10 y+40
+		character.setLocation(person_x, person_y);      //�������停 x+10 y+40
 		//setlocation(character);
 
 		//character.setBorderPainted(false); 
@@ -187,12 +175,12 @@ public class GameMap2 extends JPanel implements ActionListener{
 		//setVisible(true);
 		
 		this.add(character);
-		this.add(pein);
-		this.add(data_s);
-		this.add(computer);
-		this.add(monster4);
-		this.add(monster5);
-		this.add(monster6);
+		this.add(skeleton1);
+		this.add(skeleton2);
+		this.add(wizard);
+		this.add(soilder);
+		this.add(archer);
+		this.add(pirate);
 		this.requestFocusInWindow();
 		
 	}
@@ -252,7 +240,6 @@ public class GameMap2 extends JPanel implements ActionListener{
 			break;
 		case "bag":
 			setVisible(false);
-			tutorial.setVisible(true);
 			break;	
 		}
 		this.requestFocusInWindow();
@@ -267,7 +254,7 @@ public class GameMap2 extends JPanel implements ActionListener{
 
 				
 				
-				//生怪
+				//����
 				Status M=new Status("TA");
 				enterBattle(M , monster_win , 0);
 				
@@ -275,60 +262,54 @@ public class GameMap2 extends JPanel implements ActionListener{
 		}
 	}
 	
-	public void the_professors(int person_x,int person_y) {
+	public void enterBattle(int person_x,int person_y) {
 		boolean enter=false;
 		int x = -1;
-		Status M=new Status("whatever");
+		Status M=new Status("default");
 		if(person_x >500 && person_x < 700 && person_y > 80 && person_y < 240 &&monster_win[1] == false) {
-			System.out.println("pein");
-			
-			//這裡觸發戰鬥
-			//記得給我boss name
-			M=new Status("pein");
+			System.out.println("skeleton1");
+			//�ㄐ閫貊�擛�
+			//閮�策��oss name
+			M=new Status("skeleton1");
 			enter=true;
-			
-
 			x = 1;
-
-
 		}
 		if(person_x >40 && person_x < 240 && person_y > 60 && person_y < 220&&monster_win[2] == false) {
-			System.out.println("data_s");
+			System.out.println("skeleton2");
 			
-			M=new Status("DataStructure");
+			M=new Status("skeleton2");
 			enter=true;
 			x = 2;
 		}
 
 		if(person_x >280 && person_x < 480 && person_y > 490 && person_y < 650&&monster_win[3] == false) {
-			System.out.println("computer");
+			System.out.println("wizard");
 			
-			M=new Status("ComputerScience");
+			M=new Status("wizard");
 			enter=true;
 			x = 3;
 		}
-		
 		//4
 		if(person_x >270 && person_x < 470 && person_y > 0 && person_y < 160&&monster_win[4] == false) {
-			System.out.println("4");
+			System.out.println("solider");
 			
-			M=new Status("monster4");
+			M=new Status("soilder");
 			enter=true;
 			x = 4;
 		}
 		//5
 		if(person_x >950 && person_x < 1150 && person_y > 450 && person_y < 610&&monster_win[5] == false) {
-			System.out.println("5");
+			System.out.println("archer");
 			
-			M=new Status("monster5");
+			M=new Status("archer");
 			enter=true;
 			x = 5;
 		}
 		//6
 		if(person_x >570 && person_x < 770 && person_y > 500 && person_y < 660&&monster_win[6] == false) {
-			System.out.println("6");
+			System.out.println("pirate");
 			
-			M=new Status("monster6");
+			M=new Status("pirate");
 			enter=true;
 			x = 6;
 		}
@@ -339,15 +320,12 @@ public class GameMap2 extends JPanel implements ActionListener{
 		if(count_boss == 6) {
 			System.out.println("game over");
 			System.exit(1);
-			
-
 		}
 		
 	}
 	private void enterBattle(Status M , boolean monster_win[],int x) {
 		check_money = 0;
-		MyPlayer.blood= 100;
-		
+		MyPlayer.blood= 100;		
 		battle=new Battle(MyPlayer,M);
 		mainField.add(battle);
 		this.setVisible(false);
@@ -358,7 +336,7 @@ public class GameMap2 extends JPanel implements ActionListener{
 			
 			public void run() {
 				// TODO Auto-generated method stub
-				//不斷偵測是否結束
+				//銝�皜祆�蝯��
 				if(battle.isOver())
 				{
 					check_money = backMap();
@@ -368,17 +346,17 @@ public class GameMap2 extends JPanel implements ActionListener{
 						monster_win[x] = true;
 						
 						if(x == 1 )
-							pein.setVisible(false);
+							skeleton1.setVisible(false);
 						else if(x == 2 )
-							data_s.setVisible(false);
+							skeleton2.setVisible(false);
 						else if(x == 3 )
-							computer.setVisible(false);
+							wizard.setVisible(false);
 						else if(x == 4 )
-							monster4.setVisible(false);
+							soilder.setVisible(false);
 						else if(x == 5 )
-							monster5.setVisible(false);
+							archer.setVisible(false);
 						else if(x == 6 )
-							monster6.setVisible(false);
+							pirate.setVisible(false);
 						++count_boss ;
 						
 					}

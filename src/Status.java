@@ -26,15 +26,26 @@ public class Status {
 			blood=0;
 			money=10000000;
 			break;
-		case "pein":
+		case "skeleton1":
 			attack=40;
 			blood=100;
 			money=100;
 			power=5;
 			break;
-			
+		case "skeleton2":
+			attack=20;
+			blood=100;
+			money=50;
+			power=5;		
+			break;	
+		case "wizard":
+			attack=30;
+			blood=100;
+			money=50;
+			power=5;
+			break;
 		//
-		case "monster4":
+		case "soilder":
 			attack=50;
 			blood=100;
 			money=100;
@@ -42,15 +53,13 @@ public class Status {
 			break;
 			
 		//
-		case "monster5":
+		case "archer":
 			attack=60;
 			blood=100;
 			money=100;
 			power=10;
 			break;
-		
-		//小光光
-		case "monster6":
+		case "pirate":
 			attack=70;
 			blood=100;
 			money=100;
@@ -60,19 +69,6 @@ public class Status {
 			attack=10;
 			blood=10;
 			money=30;
-			power=5;
-			break;
-		case "DataStructure":
-			attack=20;
-			blood=100;
-			money=50;
-			power=5;		
-			break;
-		case "ComputerScience":
-		//這邊打完所有教授的case
-			attack=30;
-			blood=100;
-			money=50;
 			power=5;
 			break;
 		

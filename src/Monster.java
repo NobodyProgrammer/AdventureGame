@@ -47,37 +47,37 @@ public class Monster extends Property{
 			count=0;
 			locY=300;
 			break;
-		case "pein":
+		case "skeleton1":
 			width=500;
 			height=600;
 			locY=0;
 			count=1;	
 			break;
-		case "DataStructure":
+		case "skeleton2":
 			width=500;
 			height=600;
 			locY=0;
 			count=2;	
 			break;
-		case "ComputerScience":
+		case "wizard":
 			width=200;
 			height=300;
 			locY=250;
 			count=3;
 			break;
-		case "monster4":
+		case "soilder":
 			width=200;
 			height=300;
 			locY=250;
 			count=4;
 			break;
-		case "monster5":
+		case "archer":
 			width=200;
 			height=300;
 			locY=250;
 			count=5;
 			break;
-		case "monster6":
+		case "pirate":
 			width=200;
 			height=300;
 			locY=250;
@@ -95,24 +95,24 @@ public class Monster extends Property{
 		if(attackFlag)
 		{
 			switch (name) {
-			case "ComputerScience":
+			case "wizard":
 				width=400;
 				height=500;
 				locY=150;
 				break;
-			case "monster4":
+			case "soilder":
 				width=500;
 				height=500;
 				locY=100;
 				locX=500;
 				break;
-			case "monster5":
+			case "archer":
 				width=300;
 				height=300;
 				locY=250;
 				locX=700;
 				break;
-			case "monster6":
+			case "pirate":
 				width=500;
 				height=300;
 				locY=250;
@@ -126,25 +126,25 @@ public class Monster extends Property{
 		}	
 		else {
 			switch (name) {
-			case "ComputerScience":
+			case "wizard":
 				width=250;
 				height=300;
 				locY=250;
 				locX=700;
 				break;
-			case "monster4":
+			case "soilder":
 				width=250;
 				height=300;
 				locY=250;
 				locX=700;
 				break;
-			case "monster5":
+			case "archer":
 				width=250;
 				height=300;
 				locY=250;
 				locX=700;
 				break;
-			case "monster6":
+			case "pirate":
 				width=250;
 				height=300;
 				locY=250;
