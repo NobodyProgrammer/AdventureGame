@@ -64,7 +64,7 @@ public class Battle extends JPanel implements ActionListener {
 		try {
 			JLabel jlb = new JLabel();
 			int width = 1300, height = 700;
-			ImageIcon image = new ImageIcon("image/field1.png");
+			ImageIcon image = new ImageIcon("../image/field1.png");
 			image.setImage(image.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 			jlb.setIcon(image);
 			jlb.setSize(width, height);
@@ -202,7 +202,7 @@ public class Battle extends JPanel implements ActionListener {
 
 		// here to run animation of player
 		player.playerImageNum = 0;
-		player.playerPath = "image/playerAttack/player";
+		player.playerPath = "../image/playerAttack/player";
 		player.playerWidth = 400;
 		player.playerHeight = 500;
 		player.p.setLocation(500, 100);
@@ -223,7 +223,7 @@ public class Battle extends JPanel implements ActionListener {
 		}
 
 		// back to original animation after the skill
-		player.playerPath = "image/player/player0";
+		player.playerPath = "../image/player/player0";
 		player.playerWidth = tempWidth;
 		player.playerHeight = tempHeight;
 		player.p.setLocation(tempX, tempY);

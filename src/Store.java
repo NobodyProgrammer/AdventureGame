@@ -4,18 +4,16 @@ import java.util.*;
 
 import javax.swing.*;
 
-public class Store extends JPanel
-{
+public class Store extends JPanel {
     private Hashtable<String, Product> productList;
     private Status user;
     private JLabel remainMoney;
     private JButton exitButton;
     private GameMap2 map2;
 
-    public Store(GameMap2 mp2)
-    {
-    	System.out.println(mp2.getClass());
-    	map2 = mp2;
+    public Store(GameMap2 mp2) {
+        System.out.println(mp2.getClass());
+        map2 = mp2;
         productList = new Hashtable<String, Product>();
         productList.put("leg", new Product("leg", 50, this));
         productList.put("coffee", new Product("coffee", 50, this));
@@ -34,8 +32,7 @@ public class Store extends JPanel
 
         exitButton = new JButton("Exit");
         exitButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
+            public void actionPerformed(ActionEvent e) {
                 exit();
             }
         });
@@ -47,15 +44,16 @@ public class Store extends JPanel
     }
 
     /**
-     * This method should called when clicking the lunch
-     * buttom of store.
+     * This method should called when clicking the lunch buttom of store.
+     * 
      * @user The status of user
      */
-    public void init(Status user)
-    {
+    public void init(Status user) {
         this.user = user;
         map2.setVisible(false);
-        productList.forEach((k, v) -> { v.reset(); });
+        productList.forEach((k, v) -> {
+            v.reset();
+        });
         remainMoney.setText(String.valueOf(user.money));
         setVisible(true);
         System.out.println("init");
@@ -64,15 +62,13 @@ public class Store extends JPanel
     /**
      * This method should be called when exiting the store.
      */
-    public void exit()
-    {
+    public void exit() {
         setVisible(false);
         map2.setVisible(true);
         map2.requestFocusInWindow();
     }
 
-    public void buy(Product p, Integer n)
-    {
+    public void buy(Product p, Integer n) {
         if (n * p.getPrice() > user.money) {
             JFrame warning = new JFrame();
             JLabel text = new JLabel("Not enough money!!");
@@ -91,11 +87,10 @@ public class Store extends JPanel
             user.skill.put(p.getName(), n);
     }
 
-    private void formProperLayout()
-    {
+    private void formProperLayout() {
         JLabel l = new JLabel("Money:");
-       
-        JLabel img = new JLabel(new ImageIcon("image/store/sale.gif"));
+
+        JLabel img = new JLabel(new ImageIcon("../image/store/sale.gif"));
         GroupLayout layout = new GroupLayout(this);
         setLayout(layout);
 
@@ -123,12 +118,8 @@ public class Store extends JPanel
         hg5.addComponent(img);
         hg5.addComponent(exitButton);
 
-        layout.setHorizontalGroup(layout.createSequentialGroup()
-                                          .addGroup(hg1)
-                                          .addGroup(hg2)
-                                          .addGroup(hg3)
-                                          .addGroup(hg4)
-                                          .addGroup(hg5));
+        layout.setHorizontalGroup(
+                layout.createSequentialGroup().addGroup(hg1).addGroup(hg2).addGroup(hg3).addGroup(hg4).addGroup(hg5));
 
         /* Vertical */
         GroupLayout.ParallelGroup vg1 = layout.createParallelGroup(GroupLayout.Alignment.CENTER);
@@ -151,8 +142,7 @@ public class Store extends JPanel
         vg3.addComponent(productList.get("mask"));
         vg3.addComponent(exitButton);
 
-        layout.setVerticalGroup(
-                layout.createSequentialGroup().addGroup(vg1).addGroup(vg2).addGroup(vg3));
+        layout.setVerticalGroup(layout.createSequentialGroup().addGroup(vg1).addGroup(vg2).addGroup(vg3));
     }
 
 }

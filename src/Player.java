@@ -15,102 +15,103 @@ import javax.swing.JProgressBar;
 
 public class Player extends Property {
 	public JLabel p;
-	public ArrayList<JButton> skillUse=new ArrayList<JButton>();
-	
-	public Hashtable<String,Integer> skill=new Hashtable<String, Integer>();
-	public Hashtable<String, JLabel> skillWatched=new Hashtable<String, JLabel>();
-	private Timer playerIdel=new Timer();
-	//¶Çµ¹battle¶]°Êµe¥Îªº
-	public int playerImageNum=0;
-	public String playerPath="image/player/player0";
-	public int playerWidth=150;
-	public int playerHeight=300;
-	private int i=0;
-	public Player(JPanel  fieldJPanel,Status pStatus) {
+	public ArrayList<JButton> skillUse = new ArrayList<JButton>();
+
+	public Hashtable<String, Integer> skill = new Hashtable<String, Integer>();
+	public Hashtable<String, JLabel> skillWatched = new Hashtable<String, JLabel>();
+	private Timer playerIdel = new Timer();
+	// ï¿½Çµï¿½battleï¿½]ï¿½Êµeï¿½Îªï¿½
+	public int playerImageNum = 0;
+	public String playerPath = "../image/player/player0";
+	public int playerWidth = 150;
+	public int playerHeight = 300;
+	private int i = 0;
+
+	public Player(JPanel fieldJPanel, Status pStatus) {
 		// TODO Auto-generated constructor stub
-		battleField=fieldJPanel;
+		battleField = fieldJPanel;
 		setPlayer(pStatus);
 		setPlayerProperty();
-		//System.out.println(pStatus.skill.get("coffee"));
+		// System.out.println(pStatus.skill.get("coffee"));
 		newskillButton();
-		
-		//¶}©lplayerªºtimer
+
+		// ï¿½}ï¿½lplayerï¿½ï¿½timer
 		playerIdel.schedule(new TimerTask() {
-			
+
 			@Override
 			public void run() {
-				
+
 				// TODO Auto-generated method stub
 
-				ImageIcon image = new ImageIcon(playerPath+playerImageNum+".gif");//¨Ò¶µ¤ÆImageIcon ª«¥ó
-				image.setImage(image.getImage().getScaledInstance(playerWidth, playerHeight,Image.SCALE_DEFAULT ));
+				ImageIcon image = new ImageIcon(playerPath + playerImageNum + ".gif");// ï¿½Ò¶ï¿½ï¿½ï¿½ImageIcon ï¿½ï¿½ï¿½ï¿½
+				image.setImage(image.getImage().getScaledInstance(playerWidth, playerHeight, Image.SCALE_DEFAULT));
 				p.setIcon(image);
-				
+
 				++playerImageNum;
-				if(playerImageNum>=43)
-					playerImageNum=0;
+				if (playerImageNum >= 43)
+					playerImageNum = 0;
 			}
-		}, 0,50);
-		
+		}, 0, 50);
+
 	}
+
 	public void setPlayer(Status s) {
-	 //³]©w
-		p = new JLabel();	//¨Ò¶µ¤ÆJLble
+		// ï¿½]ï¿½w
+		p = new JLabel(); // ï¿½Ò¶ï¿½ï¿½ï¿½JLble
 		int width = this.playerWidth;
 		int height = this.playerHeight;
 		p.setSize(width, height);
-		p.setLocation(500,300);
-		//player.setOpaque(true); 
-		//player.setBackground(Color.red);
+		p.setLocation(500, 300);
+		// player.setOpaque(true);
+		// player.setBackground(Color.red);
 		battleField.add(p);
-		attack=s.attack;
-		blood=s.blood;
-		money=s.money;
-		
-		this.skill=s.skill;
-		
-		 
-	 }
+		attack = s.attack;
+		blood = s.blood;
+		money = s.money;
+
+		this.skill = s.skill;
+
+	}
+
 	public void setPlayerProperty() {
-		bloodText=new JLabel("§Ú¤è¦å¶q");
-		bloodText.setSize(100,50);
+		bloodText = new JLabel("ï¿½Ú¤ï¿½ï¿½q");
+		bloodText.setSize(100, 50);
 		bloodText.setForeground(Color.white);
 		bloodText.setFont(new Font("dialog", 1, 20));
-		blooBar=new JProgressBar();
+		blooBar = new JProgressBar();
 		blooBar.setMaximum(100);
 		blooBar.setMinimum(0);
 		blooBar.setValue(this.blood);
 		blooBar.setForeground(Color.red);
-		blooBar.setSize(200,30);
-		blooBar.setLocation(0,50);
-		attackText=new JLabel("§ðÀ»¤O:"+this.attack);
-		attackText.setSize(100,50);
-		attackText.setLocation(0,100);
+		blooBar.setSize(200, 30);
+		blooBar.setLocation(0, 50);
+		attackText = new JLabel("ï¿½ï¿½ï¿½ï¿½ï¿½O:" + this.attack);
+		attackText.setSize(100, 50);
+		attackText.setLocation(0, 100);
 		attackText.setForeground(Color.white);
 		attackText.setFont(new Font("dialog", 1, 20));
 		battleField.add(blooBar);
 		battleField.add(bloodText);
 		battleField.add(attackText);
-		
+
 	}
+
 	private void newskillButton() {
-		//System.out.print(Y_skill[0]);
-		skill.forEach((k,v)->{
-			if(v>0)
-			{
-				JButton button=new JButton(k);
-				button.setSize(150,50);
+		// System.out.print(Y_skill[0]);
+		skill.forEach((k, v) -> {
+			if (v > 0) {
+				JButton button = new JButton(k);
+				button.setSize(150, 50);
 				button.setVisible(true);
-				button.setLocation(0+200*(i/5),200+50*(i%5));
-				JLabel label=new JLabel(v.toString());
-				label.setSize(50,20);
-				label.setLocation(150+200*(i/5),200+50*(i%5));
+				button.setLocation(0 + 200 * (i / 5), 200 + 50 * (i % 5));
+				JLabel label = new JLabel(v.toString());
+				label.setSize(50, 20);
+				label.setLocation(150 + 200 * (i / 5), 200 + 50 * (i % 5));
 				label.setForeground(Color.white);
-				label.setFont(new Font("dialog",1,20));
-				
-				
+				label.setFont(new Font("dialog", 1, 20));
+
 				skillWatched.put(k, label);
-			    skillUse.add(button);    
+				skillUse.add(button);
 				battleField.add(button);
 				battleField.add(label);
 				i++;
@@ -118,8 +119,6 @@ public class Player extends Property {
 
 		});
 
-		
 	}
-
 
 }
