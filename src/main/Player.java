@@ -1,3 +1,5 @@
+package main;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -20,9 +22,8 @@ public class Player extends Property {
 	public Hashtable<String, Integer> skill = new Hashtable<String, Integer>();
 	public Hashtable<String, JLabel> skillWatched = new Hashtable<String, JLabel>();
 	private Timer playerIdel = new Timer();
-	// �ǵ�battle�]�ʵe�Ϊ�
 	public int playerImageNum = 0;
-	public String playerPath = "../image/player/player0";
+	public String playerPath = "./image/player/player0";
 	public int playerWidth = 150;
 	public int playerHeight = 300;
 	private int i = 0;
@@ -35,7 +36,6 @@ public class Player extends Property {
 		// System.out.println(pStatus.skill.get("coffee"));
 		newskillButton();
 
-		// �}�lplayer��timer
 		playerIdel.schedule(new TimerTask() {
 
 			@Override
@@ -43,7 +43,7 @@ public class Player extends Property {
 
 				// TODO Auto-generated method stub
 
-				ImageIcon image = new ImageIcon(playerPath + playerImageNum + ".gif");// �Ҷ���ImageIcon ����
+				ImageIcon image = new ImageIcon(playerPath + playerImageNum + ".gif");
 				image.setImage(image.getImage().getScaledInstance(playerWidth, playerHeight, Image.SCALE_DEFAULT));
 				p.setIcon(image);
 
@@ -56,8 +56,7 @@ public class Player extends Property {
 	}
 
 	public void setPlayer(Status s) {
-		// �]�w
-		p = new JLabel(); // �Ҷ���JLble
+		p = new JLabel();
 		int width = this.playerWidth;
 		int height = this.playerHeight;
 		p.setSize(width, height);
@@ -74,7 +73,7 @@ public class Player extends Property {
 	}
 
 	public void setPlayerProperty() {
-		bloodText = new JLabel("�ڤ��q");
+		bloodText = new JLabel("temp");
 		bloodText.setSize(100, 50);
 		bloodText.setForeground(Color.white);
 		bloodText.setFont(new Font("dialog", 1, 20));
@@ -85,7 +84,7 @@ public class Player extends Property {
 		blooBar.setForeground(Color.red);
 		blooBar.setSize(200, 30);
 		blooBar.setLocation(0, 50);
-		attackText = new JLabel("�����O:" + this.attack);
+		attackText = new JLabel("temp:" + this.attack);
 		attackText.setSize(100, 50);
 		attackText.setLocation(0, 100);
 		attackText.setForeground(Color.white);

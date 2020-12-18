@@ -1,3 +1,5 @@
+package main;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -31,7 +33,6 @@ public class Monster extends Property {
 		money = s.money;
 		power = s.power;
 		this.name = s.name;
-
 	}
 
 	public void setMonsterImage(boolean attackFlag) {
@@ -121,7 +122,7 @@ public class Monster extends Property {
 				default:
 					break;
 			}
-			image2 = new ImageIcon("../image/monster/" + count + "fire.gif");// �Ҷ���ImageIcon ����
+			image2 = new ImageIcon("./image/monster/" + count + "fire.gif");
 		} else {
 			switch (name) {
 				case "wizard":
@@ -151,7 +152,7 @@ public class Monster extends Property {
 				default:
 					break;
 			}
-			image2 = new ImageIcon("../image/monster/" + count + ".gif");// �Ҷ���ImageIcon ����
+			image2 = new ImageIcon("./image/monster/" + count + ".gif");// �Ҷ���ImageIcon ����
 		}
 		image2.setImage(image2.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 

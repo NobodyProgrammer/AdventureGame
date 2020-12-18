@@ -1,10 +1,12 @@
-	
+package main;
+
 import java.awt.Frame;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
-public class AdvantureGame extends JFrame{
+
+public class AdvantureGame extends JFrame {
 	public AdvantureGame() {
 		Status player = new Status("player");
 		setSize(0, 0);
@@ -31,11 +33,11 @@ public class AdvantureGame extends JFrame{
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-			new AdvantureGame();
-		
+		new AdvantureGame();
+
 	}
 
 }
-	

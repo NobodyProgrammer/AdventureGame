@@ -1,3 +1,4 @@
+package main;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -17,7 +18,6 @@ public class Battle extends JPanel implements ActionListener {
 	private Timer AnnounceRound = new Timer();
 	private Timer AnnounceSkill = new Timer();
 	private Timer monsterTimer;
-	private int monsterPath;
 	private JLabel allAnnounce = new JLabel();
 	private JButton escape = new JButton("escape...");
 	private boolean endFlag = false;
@@ -45,9 +45,8 @@ public class Battle extends JPanel implements ActionListener {
 		escape.addActionListener(this);
 		add(escape);
 
-		allAnnounce.setText("temp!");
+		allAnnounce.setText("battle!");
 		AnnounceRound.schedule(new TimerTask() {
-
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
@@ -55,7 +54,7 @@ public class Battle extends JPanel implements ActionListener {
 				for (int i = 0; i < player.skillUse.size(); ++i)
 					player.skillUse.get(i).setEnabled(true);
 			}
-		}, 3000);
+		}, 2000);
 	}
 
 	private void newBackground() {
@@ -64,16 +63,15 @@ public class Battle extends JPanel implements ActionListener {
 		try {
 			JLabel jlb = new JLabel();
 			int width = 1300, height = 700;
-			ImageIcon image = new ImageIcon("../image/field1.png");
+			ImageIcon image = new ImageIcon("./image/field1.png");
 			image.setImage(image.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 			jlb.setIcon(image);
 			jlb.setSize(width, height);
 			this.add(jlb);
 		} catch (Exception e) {
-			System.out.println("fuck");
+			System.out.println("new background false");
 		}
 	}
-
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("escape..."))
 			this.endFlag = true;
@@ -95,72 +93,72 @@ public class Battle extends JPanel implements ActionListener {
 					blood = player.blooBar.getValue();
 					player.blood = blood + 10;
 					player.blooBar.setValue(blood + 10);
-					allAnnounce.setText("temp!");
+					allAnnounce.setText("recover 10!");
 					break;
 				case "redBlue":
 					blood = player.blooBar.getMaximum() / 2;
 					player.blood = blood;
 					player.blooBar.setValue(blood);
 					System.out.println(player.blooBar.getValue());
-					allAnnounce.setText("temp!");
+					allAnnounce.setText("recover 50%!");
 					break;
-				case "leg":
+				case "addAttack1":
 
 					attack = (player.attack += 10);
 					player.attackText.setText("attack:" + attack);
-					allAnnounce.setText("temp!");
+					allAnnounce.setText("attack+10!");
 
 					break;
-				case "underwear":
+				case "addAttack2":
 					player.attack += 20;
 					attack = player.attack;
 					player.attackText.setText("attack:" + attack);
-					allAnnounce.setText("temp!");
+					allAnnounce.setText("attack+20!");
 					break;
-				case "G_test":
+				case "subAttack":
 					attack = (monster.attack -= 10);
 					monster.attackText.setText("attack:" + attack);
-					allAnnounce.setText("temp!");
+					allAnnounce.setText("attack-10!");
 					break;
-				case "ticket":
+				case "delayOne":
 					monster.roundDelay = 1;
-					allAnnounce.setText("temp!");
+					allAnnounce.setText("jump one round!");
 					break;
-				case "phone":
+				case "special1":
 					if (M_name.equals("archer")) {
 						monster.roundDelay = 2;
-						allAnnounce.setText("temp!");
+						allAnnounce.setText("jump two round");
 					} else {
-						allAnnounce.setText("temp...");
+						allAnnounce.setText("not work...");
 					}
 					break;
-				case "medician":
+				case "special2":
 					if (M_name.equals("soilder")) {
 						monster.blood /= 2;
 						monster.blooBar.setValue(monster.blood);
-						allAnnounce.setText("temp!");
+						allAnnounce.setText("succeed!substract the attack");
 					} else {
-						allAnnounce.setText("temp...");
+						allAnnounce.setText("not work...");
 					}
 					break;
-				case "mask":
+				case "special3":
 					if (M_name.equals("skeleton")) {
 						monster.roundDelay = 2;
-						allAnnounce.setText("temp");
+						allAnnounce.setText("jump two round");
 					} else {
-						allAnnounce.setText("temp...");
+						allAnnounce.setText("not work...");
 					}
 					break;
-				case "H_test":
+				case "special4":
 					if (M_name.equals("skeleton1")) {
 						monster.roundDelay = 2;
-						allAnnounce.setText("temp!");
+						allAnnounce.setText("jump two round!");
 					} else {
-						allAnnounce.setText("temp...");
+						allAnnounce.setText("not work...");
 					}
 					break;
 				default:
-					allAnnounce.setText("temp!");
+					allAnnounce.setText("attack!");
 					break;
 			}
 			for (int i = 0; i < player.skillUse.size(); ++i)
@@ -180,20 +178,58 @@ public class Battle extends JPanel implements ActionListener {
 			}, 2000);
 
 		}
-
 	}
-
-	private void addButtonEvent() {
-		for (int i = 0; i < player.skillUse.size(); ++i) {
-			// System.out.println(property.skillUse.get(i));
-			player.skillUse.get(i).addActionListener(this);
-			player.skillUse.get(i).setEnabled(false);
-
+	public void StartGame() {
+		if (player.roundDelay > 0) {
+			allAnnounce.setText("can't attack!");
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException exception) {
+				// TODO: handle exception
+				exception.printStackTrace();
+			}
+			--player.roundDelay;
+		} else {
+			playerRound();
+			isWinGame();
 		}
-		// System.out.println(property.skillUse.get(0).getActionListeners().length);
+		if (monster.roundDelay > 0) {
+			allAnnounce.setText("can't attack!");
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException exception) {
+				// TODO: handle exception
+				exception.printStackTrace();
+			}
+			--monster.roundDelay;
+		} else {
+			monsterRound();
+			isWinGame();
+		}
+
+		// System.out.println("successful");
+		allAnnounce.setText("Your Round!");
+		AnnounceRound.schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				if (player.roundDelay > 0) {
+					StartGame();
+				} else {
+					allAnnounce.setText("");
+					for (int i = 0; i < player.skillUse.size(); ++i) {
+						String skillText = player.skillUse.get(i).getText();
+						if (player.skill.get(skillText) > 0)
+							player.skillUse.get(i).setEnabled(true);
+					}
+
+				}
+
+			}
+		}, 2000);
 
 	}
-
 	public void playerRound() {
 		int tempWidth = player.playerWidth;
 		int tempHeight = player.playerHeight;
@@ -202,17 +238,17 @@ public class Battle extends JPanel implements ActionListener {
 
 		// here to run animation of player
 		player.playerImageNum = 0;
-		player.playerPath = "../image/playerAttack/player";
+		player.playerPath = "./image/playerAttack/player";
 		player.playerWidth = 400;
 		player.playerHeight = 500;
 		player.p.setLocation(500, 100);
 		player.p.setSize(400, 500);
 
-		// player attacker
+		// player attack
 		monster.blood -= player.attack;
 		monster.blooBar.setValue(monster.blood);
 		++monster.power;
-		monster.powerBar.setValue(monster.power);// power銝��
+		monster.powerBar.setValue(monster.power);
 
 		// wait the animation of skill
 		try {
@@ -223,7 +259,7 @@ public class Battle extends JPanel implements ActionListener {
 		}
 
 		// back to original animation after the skill
-		player.playerPath = "../image/player/player0";
+		player.playerPath = "./image/player/player0";
 		player.playerWidth = tempWidth;
 		player.playerHeight = tempHeight;
 		player.p.setLocation(tempX, tempY);
@@ -235,12 +271,11 @@ public class Battle extends JPanel implements ActionListener {
 		monster.attackText.setText("attack:" + monster.attack);
 
 	}
-
 	public void monsterRound() {
 
-		allAnnounce.setText("temp!");
+		allAnnounce.setText("Monster round!");
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(2000);
 		} catch (InterruptedException exception) {
 			// TODO: handle exception
 			exception.printStackTrace();
@@ -249,9 +284,9 @@ public class Battle extends JPanel implements ActionListener {
 
 		monsterTimer = new Timer();
 		if (monster.powerBar.getValue() == monster.powerBar.getMaximum()) {
-			allAnnounce.setText("temp!");
+			allAnnounce.setText("Monster skill!");
 			try {
-				Thread.sleep(3000);
+				Thread.sleep(2000);
 			} catch (InterruptedException exception) {
 				// TODO: handle exception
 				exception.printStackTrace();
@@ -283,18 +318,17 @@ public class Battle extends JPanel implements ActionListener {
 		monster.attackText.setText("attack:" + monster.attack);
 
 	}
-
 	public void useMonsterSkill() {
 		if (monster.powerBar.getValue() == monster.powerBar.getMaximum()) {
 			switch (this.M_name) {
 				case "skeleton1":
-					player.roundDelay = 2;
+					player.roundDelay = 1;
 					break;
 				case "skeleton":
 					monster.blood /= 2;
 					monster.blooBar.setValue(monster.blood);
 					monster.attack *= 2;
-					monster.attackText.setText("����:" + monster.attack);
+					monster.attackText.setText("double attack:" + monster.attack);
 					break;
 				case "wizard":
 					if (monster.blooBar.getMaximum() / 2 >= monster.blood) {
@@ -307,7 +341,7 @@ public class Battle extends JPanel implements ActionListener {
 
 					break;
 				case "soilder":
-					player.roundDelay = 2;
+					player.roundDelay = 1;
 					break;
 				case "archer":
 					player.attack /= 2;
@@ -325,58 +359,6 @@ public class Battle extends JPanel implements ActionListener {
 		}
 	}
 
-	public void StartGame() {
-		if (player.roundDelay > 0) {
-			allAnnounce.setText("temp!");
-			try {
-				Thread.sleep(3000);
-			} catch (InterruptedException exception) {
-				// TODO: handle exception
-				exception.printStackTrace();
-			}
-			--player.roundDelay;
-		} else {
-			playerRound();
-			isWinGame();
-
-		}
-		if (monster.roundDelay > 0) {
-			allAnnounce.setText("temp!");
-			try {
-				Thread.sleep(3000);
-			} catch (InterruptedException exception) {
-				// TODO: handle exception
-				exception.printStackTrace();
-			}
-			--monster.roundDelay;
-		} else {
-			monsterRound();
-			isWinGame();
-		}
-
-		// System.out.println("successful");
-		allAnnounce.setText("temp!");
-		AnnounceRound.schedule(new TimerTask() {
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				if (player.roundDelay > 0) {
-					StartGame();
-				} else {
-					allAnnounce.setText("");
-					for (int i = 0; i < player.skillUse.size(); ++i) {
-						String skillText = player.skillUse.get(i).getText();
-						if (player.skill.get(skillText) > 0)
-							player.skillUse.get(i).setEnabled(true);
-					}
-
-				}
-
-			}
-		}, 3000);
-
-	}
 
 	private void isWinGame() {
 		if (player.blooBar.getValue() == 0) {
@@ -413,7 +395,14 @@ public class Battle extends JPanel implements ActionListener {
 			}
 		}
 	}
-
+	private void addButtonEvent() {
+		for (int i = 0; i < player.skillUse.size(); ++i) {
+			// System.out.println(property.skillUse.get(i));
+			player.skillUse.get(i).addActionListener(this);
+			player.skillUse.get(i).setEnabled(false);
+		}
+		// System.out.println(property.skillUse.get(0).getActionListeners().length);
+	}
 	public boolean isOver() {
 		return endFlag;
 	}

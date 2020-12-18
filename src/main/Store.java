@@ -1,3 +1,5 @@
+package main;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -15,18 +17,18 @@ public class Store extends JPanel {
         System.out.println(mp2.getClass());
         map2 = mp2;
         productList = new Hashtable<String, Product>();
-        productList.put("leg", new Product("leg", 50, this));
+        productList.put("addAttack1", new Product("addAttack1", 50, this));
         productList.put("coffee", new Product("coffee", 50, this));
-        productList.put("G_test", new Product("G_test", 50, this));
+        productList.put("subAttack", new Product("subAttack", 50, this));
 
-        productList.put("ticket", new Product("ticket", 1000, this));
+        productList.put("delayOne", new Product("delayOne", 1000, this));
         productList.put("redblue", new Product("redblue", 200, this));
-        productList.put("underwear", new Product("underwear", 200, this));
+        productList.put("addAttack2", new Product("addAttack2", 200, this));
 
-        productList.put("medician", new Product("medician", 300, this));
-        productList.put("phone", new Product("phone", 300, this));
-        productList.put("mask", new Product("mask", 300, this));
-        productList.put("H_test", new Product("H_test", 300, this));
+        productList.put("special2", new Product("special2", 300, this));
+        productList.put("special1", new Product("special1", 300, this));
+        productList.put("special3", new Product("special3", 300, this));
+        productList.put("special4", new Product("special4", 300, this));
 
         remainMoney = new JLabel("0");
 
@@ -90,28 +92,28 @@ public class Store extends JPanel {
     private void formProperLayout() {
         JLabel l = new JLabel("Money:");
 
-        JLabel img = new JLabel(new ImageIcon("../image/store/sale.gif"));
+        JLabel img = new JLabel(new ImageIcon("./image/store/sale.gif"));
         GroupLayout layout = new GroupLayout(this);
         setLayout(layout);
 
         /* Horizontal */
         GroupLayout.ParallelGroup hg1 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
-        hg1.addComponent(productList.get("leg"));
-        hg1.addComponent(productList.get("ticket"));
-        hg1.addComponent(productList.get("phone"));
+        hg1.addComponent(productList.get("addAttack1"));
+        hg1.addComponent(productList.get("delayOne"));
+        hg1.addComponent(productList.get("special1"));
 
         GroupLayout.ParallelGroup hg2 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
         hg2.addComponent(productList.get("coffee"));
         hg2.addComponent(productList.get("redblue"));
-        hg2.addComponent(productList.get("medician"));
+        hg2.addComponent(productList.get("special2"));
 
         GroupLayout.ParallelGroup hg3 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
-        hg3.addComponent(productList.get("G_test"));
-        hg3.addComponent(productList.get("underwear"));
-        hg3.addComponent(productList.get("H_test"));
+        hg3.addComponent(productList.get("subAttack"));
+        hg3.addComponent(productList.get("addAttack2"));
+        hg3.addComponent(productList.get("special4"));
 
         GroupLayout.ParallelGroup hg4 = layout.createParallelGroup(GroupLayout.Alignment.LEADING);
-        hg4.addComponent(productList.get("mask"));
+        hg4.addComponent(productList.get("special3"));
 
         GroupLayout.ParallelGroup hg5 = layout.createParallelGroup(GroupLayout.Alignment.CENTER);
         hg5.addGroup(layout.createSequentialGroup().addComponent(l).addComponent(remainMoney));
@@ -123,23 +125,23 @@ public class Store extends JPanel {
 
         /* Vertical */
         GroupLayout.ParallelGroup vg1 = layout.createParallelGroup(GroupLayout.Alignment.CENTER);
-        vg1.addComponent(productList.get("leg"));
+        vg1.addComponent(productList.get("addAttack1"));
         vg1.addComponent(productList.get("coffee"));
-        vg1.addComponent(productList.get("G_test"));
+        vg1.addComponent(productList.get("subAttack"));
         vg1.addComponent(l);
         vg1.addComponent(remainMoney);
 
         GroupLayout.ParallelGroup vg2 = layout.createParallelGroup(GroupLayout.Alignment.CENTER);
-        vg2.addComponent(productList.get("ticket"));
+        vg2.addComponent(productList.get("delayOne"));
         vg2.addComponent(productList.get("redblue"));
-        vg2.addComponent(productList.get("underwear"));
+        vg2.addComponent(productList.get("addAttack2"));
         vg2.addComponent(img);
 
         GroupLayout.ParallelGroup vg3 = layout.createParallelGroup(GroupLayout.Alignment.CENTER);
-        vg3.addComponent(productList.get("phone"));
-        vg3.addComponent(productList.get("medician"));
-        vg3.addComponent(productList.get("H_test"));
-        vg3.addComponent(productList.get("mask"));
+        vg3.addComponent(productList.get("special1"));
+        vg3.addComponent(productList.get("special2"));
+        vg3.addComponent(productList.get("special4"));
+        vg3.addComponent(productList.get("special3"));
         vg3.addComponent(exitButton);
 
         layout.setVerticalGroup(layout.createSequentialGroup().addGroup(vg1).addGroup(vg2).addGroup(vg3));

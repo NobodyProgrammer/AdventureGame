@@ -1,16 +1,16 @@
+package main;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class Product extends JPanel
-{
+public class Product extends JPanel {
     private JLabel name, price;
     private JButton buy;
     private JSpinner amount;
     private Store container;
 
-    public Product(String n, Integer p, Store s)
-    {
+    public Product(String n, Integer p, Store s) {
         name = new JLabel(n);
         price = new JLabel(p.toString());
         amount = new JSpinner(new SpinnerNumberModel(0, 0, 99, 1));
@@ -19,8 +19,7 @@ public class Product extends JPanel
 
         buy = new JButton("Buy");
         buy.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e)
-            {
+            public void actionPerformed(ActionEvent e) {
                 buy((Integer) amount.getValue());
             }
         });
@@ -28,23 +27,19 @@ public class Product extends JPanel
         formProperLayout();
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name.getText();
     }
 
-    public Integer getPrice()
-    {
+    public Integer getPrice() {
         return Integer.parseInt(price.getText());
     }
 
-    public void reset()
-    {
+    public void reset() {
         amount.setValue(0);
     }
 
-    private void formProperLayout()
-    {
+    private void formProperLayout() {
         JLabel l1 = new JLabel("Price:");
         JLabel l2 = new JLabel("Amount:");
         GroupLayout layout = new GroupLayout(this);
@@ -68,8 +63,7 @@ public class Product extends JPanel
         GroupLayout.ParallelGroup hg3 = layout.createParallelGroup(GroupLayout.Alignment.CENTER);
         hg3.addComponent(buy);
 
-        layout.setHorizontalGroup(
-                layout.createSequentialGroup().addGroup(hg1).addGroup(hg2).addGroup(hg3));
+        layout.setHorizontalGroup(layout.createSequentialGroup().addGroup(hg1).addGroup(hg2).addGroup(hg3));
 
         /* Vertical */
         GroupLayout.ParallelGroup vg1 = layout.createParallelGroup(GroupLayout.Alignment.CENTER);
@@ -87,13 +81,11 @@ public class Product extends JPanel
         setVisible(true);
     }
 
-    private void buy(Integer n)
-    {
+    private void buy(Integer n) {
         container.buy(this, n);
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         JFrame j = new JFrame("Product test");
         j.setLayout(new FlowLayout());
         j.setSize(400, 400);
