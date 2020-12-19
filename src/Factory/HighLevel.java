@@ -1,14 +1,19 @@
 package Factory;
+
 import main.*;
-public abstract class HighLevel{
-    private Status status;
-    public HighLevel(){
+
+public abstract class HighLevel {
+    private Monster monster;
+
+    public HighLevel(String name) {
+        monster = new Monster(name);
     }
-    protected void setStatus(String name,int a,int b,int m,int p) {
-    	this.status=new Status(name);
-    	this.status.setStatus(a,b,m,p);
+
+    protected void setStatus(int a, int b, int m, int p) {
+        this.monster.setStatus(a, b, m, p);
     }
-    public Status getStatus() {
-    	return this.status;
+
+    public Monster getMonster() {
+        return this.monster;
     }
 }

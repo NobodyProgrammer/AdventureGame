@@ -66,7 +66,7 @@ public class Player extends Property {
 		battleField.add(p);
 		attack = s.attack;
 		blood = s.blood;
-		money = s.money;
+		money = s.getMoney();
 
 		this.skill = s.skill;
 

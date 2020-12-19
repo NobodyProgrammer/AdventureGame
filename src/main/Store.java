@@ -56,7 +56,7 @@ public class Store extends JPanel {
         productList.forEach((k, v) -> {
             v.reset();
         });
-        remainMoney.setText(String.valueOf(user.money));
+        remainMoney.setText(String.valueOf(user.getMoney()));
         setVisible(true);
         System.out.println("init");
     }
@@ -71,7 +71,7 @@ public class Store extends JPanel {
     }
 
     public void buy(Product p, Integer n) {
-        if (n * p.getPrice() > user.money) {
+        if (n * p.getPrice() > user.getMoney()) {
             JFrame warning = new JFrame();
             JLabel text = new JLabel("Not enough money!!");
             text.setFont(new Font(text.getFont().getFamily(), text.getFont().getStyle(), 30));
@@ -80,9 +80,8 @@ public class Store extends JPanel {
             warning.pack();
             return;
         }
-
-        user.money -= n * p.getPrice();
-        remainMoney.setText(String.valueOf(user.money));
+        user.updateMoney(-n * p.getPrice());
+        remainMoney.setText(String.valueOf(user.getMoney()));
         if (user.skill.contains(p.getName()))
             user.skill.put(p.getName(), user.skill.get(p.getName()) + n);
         else

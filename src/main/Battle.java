@@ -27,7 +27,7 @@ public class Battle extends JPanel implements ActionListener {
 
 	public String M_name;
 
-	public Battle(Status PlayerState, Status MonsterState) {
+	public Battle(Status PlayerState, Monster M) {
 		setSize(Toolkit.getDefaultToolkit().getScreenSize());
 		this.setLayout(null);
 		allAnnounce.setSize(500, 100);
@@ -35,9 +35,10 @@ public class Battle extends JPanel implements ActionListener {
 		allAnnounce.setFont(new Font("dialog", 1, 50));
 		allAnnounce.setLocation(500, 250);
 		this.add(allAnnounce);
-		M_name = MonsterState.name;
 		player = new Player(this, PlayerState);
-		monster = new Monster(this, MonsterState);
+		M.setBattleField(this);
+		this.M_name = M.getName();
+		this.monster = M;
 		addButtonEvent();
 		newBackground();
 		escape.setSize(100, 50);
@@ -72,6 +73,7 @@ public class Battle extends JPanel implements ActionListener {
 			System.out.println("new background false");
 		}
 	}
+
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("escape..."))
 			this.endFlag = true;
@@ -79,7 +81,7 @@ public class Battle extends JPanel implements ActionListener {
 			int blood;
 			int attack;
 			Y_tempAttack = player.attack;
-			M_tempAttack = monster.attack;
+			M_tempAttack = monster.getAttack();
 			int n = player.skill.get(e.getActionCommand());
 			n--;
 			player.skill.put(e.getActionCommand(), n);
@@ -99,7 +101,6 @@ public class Battle extends JPanel implements ActionListener {
 					blood = player.blooBar.getMaximum() / 2;
 					player.blood = blood;
 					player.blooBar.setValue(blood);
-					System.out.println(player.blooBar.getValue());
 					allAnnounce.setText("recover 50%!");
 					break;
 				case "addAttack1":
@@ -116,7 +117,8 @@ public class Battle extends JPanel implements ActionListener {
 					allAnnounce.setText("attack+20!");
 					break;
 				case "subAttack":
-					attack = (monster.attack -= 10);
+					attack = monster.getAttack() - 10;
+					monster.setAttack(attack);
 					monster.attackText.setText("attack:" + attack);
 					allAnnounce.setText("attack-10!");
 					break;
@@ -134,8 +136,9 @@ public class Battle extends JPanel implements ActionListener {
 					break;
 				case "special2":
 					if (M_name.equals("soilder")) {
-						monster.blood /= 2;
-						monster.blooBar.setValue(monster.blood);
+						blood = monster.getBlood() / 2;
+						monster.setBlood(blood);
+						monster.blooBar.setValue(blood);
 						allAnnounce.setText("succeed!substract the attack");
 					} else {
 						allAnnounce.setText("not work...");
@@ -179,6 +182,7 @@ public class Battle extends JPanel implements ActionListener {
 
 		}
 	}
+
 	public void StartGame() {
 		if (player.roundDelay > 0) {
 			allAnnounce.setText("can't attack!");
@@ -230,6 +234,7 @@ public class Battle extends JPanel implements ActionListener {
 		}, 2000);
 
 	}
+
 	public void playerRound() {
 		int tempWidth = player.playerWidth;
 		int tempHeight = player.playerHeight;
@@ -245,10 +250,12 @@ public class Battle extends JPanel implements ActionListener {
 		player.p.setSize(400, 500);
 
 		// player attack
-		monster.blood -= player.attack;
-		monster.blooBar.setValue(monster.blood);
-		++monster.power;
-		monster.powerBar.setValue(monster.power);
+		System.out.print("user attack=" + player.attack);
+		monster.setBlood(monster.getBlood() - player.attack);
+		System.out.println("monster blood=" + monster.getBlood());
+		monster.blooBar.setValue(monster.getBlood());
+		monster.setPower(monster.getPower() + 1);
+		monster.powerBar.setValue(monster.getPower());
 
 		// wait the animation of skill
 		try {
@@ -266,11 +273,12 @@ public class Battle extends JPanel implements ActionListener {
 		player.p.setSize(tempWidth, tempHeight);
 
 		player.attack = Y_tempAttack;
-		monster.attack = M_tempAttack;
+		monster.setAttack(M_tempAttack);
 		player.attackText.setText("attack:" + player.attack);
-		monster.attackText.setText("attack:" + monster.attack);
+		monster.attackText.setText("attack:" + monster.getAttack());
 
 	}
+
 	public void monsterRound() {
 
 		allAnnounce.setText("Monster round!");
@@ -309,34 +317,40 @@ public class Battle extends JPanel implements ActionListener {
 		// use the special skill after the attack animation
 
 		// judge the blood after the special skill
-		player.blood -= monster.attack;
+		player.blood -= monster.getAttack();
 		player.blooBar.setValue(player.blood);
 
 		monster.setMonsterImage(false);
 
-		monster.attack = M_tempAttack;
-		monster.attackText.setText("attack:" + monster.attack);
+		monster.setAttack(M_tempAttack);
+		monster.attackText.setText("attack:" + monster.getAttack());
 
 	}
+
 	public void useMonsterSkill() {
 		if (monster.powerBar.getValue() == monster.powerBar.getMaximum()) {
+			int blood;
+			int attack;
 			switch (this.M_name) {
 				case "skeleton1":
 					player.roundDelay = 1;
 					break;
 				case "skeleton":
-					monster.blood /= 2;
-					monster.blooBar.setValue(monster.blood);
-					monster.attack *= 2;
-					monster.attackText.setText("double attack:" + monster.attack);
+					blood = monster.getBlood() / 2;
+					monster.setBlood(blood);
+					monster.blooBar.setValue(blood);
+					attack = monster.getAttack() * 2;
+					monster.setAttack(attack);
+					monster.attackText.setText("double attack:" + attack);
 					break;
 				case "wizard":
-					if (monster.blooBar.getMaximum() / 2 >= monster.blood) {
-						monster.blood *= 2;
-						monster.blooBar.setValue(monster.blood);
+					if (monster.blooBar.getMaximum() / 2 >= monster.getBlood()) {
+						blood = monster.getBlood() * 2;
+						monster.setBlood(blood);
+						monster.blooBar.setValue(blood);
 					} else {
-						monster.blood = monster.blooBar.getMaximum();
-						monster.blooBar.setValue(monster.blood);
+						monster.setBlood(monster.blooBar.getMaximum());
+						monster.blooBar.setValue(monster.getBlood());
 					}
 
 					break;
@@ -348,17 +362,16 @@ public class Battle extends JPanel implements ActionListener {
 					player.attackText.setText("attack:" + player.attack);
 					break;
 				case "pirate":
-					player.blood = 1 + monster.attack;
+					player.blood = 1 + monster.getAttack();
 
 					break;
 				default:
 					break;
 			}
 			monster.powerBar.setValue(0);
-			monster.power = 0;
+			monster.setPower(0);
 		}
 	}
-
 
 	private void isWinGame() {
 		if (player.blooBar.getValue() == 0) {
@@ -395,6 +408,7 @@ public class Battle extends JPanel implements ActionListener {
 			}
 		}
 	}
+
 	private void addButtonEvent() {
 		for (int i = 0; i < player.skillUse.size(); ++i) {
 			// System.out.println(property.skillUse.get(i));
@@ -403,13 +417,14 @@ public class Battle extends JPanel implements ActionListener {
 		}
 		// System.out.println(property.skillUse.get(0).getActionListeners().length);
 	}
+
 	public boolean isOver() {
 		return endFlag;
 	}
 
 	public int getMoney() {
 		if (winFlag)
-			return monster.money;
+			return monster.getMoney();
 		else {
 			return 0;
 		}

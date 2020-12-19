@@ -11,31 +11,41 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 public class Monster extends Property {
-	public int power;
 	public JLabel m;
 	public JProgressBar powerBar;
+	private JPanel battleField;
 	private String name;
+	private int blood;
+	private int attack;
+	private int money;
+	private int power;
 
-	public Monster(JPanel fieldJPanel, Status Mstate) {
-		// TODO Auto-generated constructor stub
-		battleField = fieldJPanel;
-		setMonster(Mstate);
-		setMonsterProperty();
+	public Monster() {
 
-		m = new JLabel();
-		setMonsterImage(false);
-		battleField.add(m);
 	}
 
-	public void setMonster(Status s) {
-		attack = s.attack;
-		blood = s.blood;
-		money = s.money;
-		power = s.power;
-		this.name = s.name;
+	public Monster(String name) {
+		// TODO Auto-generated constructor stub
+		this.name = name;
+
+	}
+
+	public void setStatus(int a, int b, int m, int p) {
+		this.attack = a;
+		this.blood = b;
+		this.money = m;
+		this.power = p;
+
+	}
+
+	public void setBattleField(JPanel field) {
+		this.battleField = field;
+		setMonsterProperty();
+		setMonsterImage(false);
 	}
 
 	public void setMonsterImage(boolean attackFlag) {
+		m = new JLabel();
 		int width = 0;
 		int height = 0;
 		int count = 0;
@@ -152,7 +162,7 @@ public class Monster extends Property {
 				default:
 					break;
 			}
-			image2 = new ImageIcon("./image/monster/" + count + ".gif");// �Ҷ���ImageIcon ����
+			image2 = new ImageIcon("./image/monster/" + count + ".gif");
 		}
 		image2.setImage(image2.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 
@@ -161,6 +171,7 @@ public class Monster extends Property {
 		m.setIcon(image2);
 		m.setSize(width, height);
 		m.setLocation(locX, locY);
+		this.battleField.add(m);
 
 	}
 
@@ -193,5 +204,41 @@ public class Monster extends Property {
 		battleField.add(bloodText);
 		battleField.add(attackText);
 		battleField.add(powerBar);
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public int getAttack() {
+		return this.attack;
+	}
+
+	public int getMoney() {
+		return this.money;
+	}
+
+	public int getBlood() {
+		return this.blood;
+	}
+
+	public int getPower() {
+		return this.power;
+	}
+
+	public void setAttack(int a) {
+		this.attack = a;
+	}
+
+	public void updateMoney(int m) {
+		this.money = m;
+	}
+
+	public void setBlood(int b) {
+		this.blood = b;
+	}
+
+	public void setPower(int p) {
+		this.power = p;
 	}
 }
