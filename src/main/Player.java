@@ -73,7 +73,7 @@ public class Player extends Property {
 	}
 
 	public void setPlayerProperty() {
-		bloodText = new JLabel("temp");
+		bloodText = new JLabel("blood");
 		bloodText.setSize(100, 50);
 		bloodText.setForeground(Color.white);
 		bloodText.setFont(new Font("dialog", 1, 20));
@@ -84,7 +84,7 @@ public class Player extends Property {
 		blooBar.setForeground(Color.red);
 		blooBar.setSize(200, 30);
 		blooBar.setLocation(0, 50);
-		attackText = new JLabel("temp:" + this.attack);
+		attackText = new JLabel("attack:" + this.attack);
 		attackText.setSize(100, 50);
 		attackText.setLocation(0, 100);
 		attackText.setForeground(Color.white);

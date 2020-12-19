@@ -7,8 +7,8 @@ import javax.swing.*;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-
-public class GameMap2 extends JPanel implements ActionListener {
+import Factory.*;
+public class GameMap extends JPanel implements ActionListener {
 	private int person_x = 750;
 	private int person_y = 280;
 	public JLabel character;
@@ -46,7 +46,7 @@ public class GameMap2 extends JPanel implements ActionListener {
 
 	// public JLabel dame_over = new JLabel();
 
-	public GameMap2(JFrame jFrame, Status p) {
+	public GameMap(JFrame jFrame, Status p) {
 		for (int i = 0; i < 7; ++i) {
 			monster_win[i] = false;
 		}
@@ -227,53 +227,61 @@ public class GameMap2 extends JPanel implements ActionListener {
 	public void isMeetMonster(int person_x, int person_y) {
 		boolean enter = false;
 		int x = -1;
-		Status M = new Status("default");
+		Status mStatus=new Status("default");
 		if (person_x > 500 && person_x < 700 && person_y > 80 && person_y < 240 && monster_win[1] == false) {
 			System.out.println("skeleton1");
-			M = new Status("skeleton1");
+			AbstractFactory factory_skeleton=new SkeletonFactory();
+			HighLevel Hmonster=factory_skeleton.createHighLevel();
+			mStatus=Hmonster.getStatus();
 			enter = true;
 			x = 1;
 		}
 		if (person_x > 40 && person_x < 240 && person_y > 60 && person_y < 220 && monster_win[2] == false) {
 			System.out.println("skeleton2");
-			M = new Status("skeleton2");
+			AbstractFactory factory_skeleton=new SkeletonFactory();
+			LowLevel Lmonster=factory_skeleton.createLowLevel();
+			mStatus=Lmonster.getStatus();
 			enter = true;
 			x = 2;
 		}
 
 		if (person_x > 280 && person_x < 480 && person_y > 490 && person_y < 650 && monster_win[3] == false) {
 			System.out.println("wizard");
-
-			M = new Status("wizard");
+			AbstractFactory factory_longdis=new LongDistanceFactory();
+			HighLevel Hmonster=factory_longdis.createHighLevel();
+			mStatus=Hmonster.getStatus();
 			enter = true;
 			x = 3;
 		}
 		// 4
 		if (person_x > 270 && person_x < 470 && person_y > 0 && person_y < 160 && monster_win[4] == false) {
 			System.out.println("solider");
-
-			M = new Status("soldier");
+			AbstractFactory factory_solider=new SoilderFactory();
+			HighLevel Hmonster=factory_solider.createHighLevel();
+			mStatus=Hmonster.getStatus();
 			enter = true;
 			x = 4;
 		}
 		// 5
 		if (person_x > 950 && person_x < 1150 && person_y > 450 && person_y < 610 && monster_win[5] == false) {
 			System.out.println("archer");
-
-			M = new Status("archer");
+			AbstractFactory factory_longdis=new LongDistanceFactory();
+			LowLevel Lmonster=factory_longdis.createLowLevel();
+			mStatus=Lmonster.getStatus();
 			enter = true;
 			x = 5;
 		}
 		// 6
 		if (person_x > 570 && person_x < 770 && person_y > 500 && person_y < 660 && monster_win[6] == false) {
 			System.out.println("pirate");
-
-			M = new Status("pirate");
+			AbstractFactory factory_solider=new SoilderFactory();
+			LowLevel Lmonster=factory_solider.createLowLevel();
+			mStatus=Lmonster.getStatus();
 			enter = true;
 			x = 6;
 		}
 		if (enter) {
-			enterBattle(M, monster_win, x);
+			enterBattle(mStatus, monster_win, x);
 		}
 		if (count_boss == 6) {
 			System.out.println("game over");

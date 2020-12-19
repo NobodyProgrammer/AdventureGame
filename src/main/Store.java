@@ -11,11 +11,11 @@ public class Store extends JPanel {
     private Status user;
     private JLabel remainMoney;
     private JButton exitButton;
-    private GameMap2 map2;
+    private GameMap map;
 
-    public Store(GameMap2 mp2) {
-        System.out.println(mp2.getClass());
-        map2 = mp2;
+    public Store(GameMap mp) {
+        System.out.println(mp.getClass());
+        map = mp;
         productList = new Hashtable<String, Product>();
         productList.put("addAttack1", new Product("addAttack1", 50, this));
         productList.put("coffee", new Product("coffee", 50, this));
@@ -52,7 +52,7 @@ public class Store extends JPanel {
      */
     public void init(Status user) {
         this.user = user;
-        map2.setVisible(false);
+        map.setVisible(false);
         productList.forEach((k, v) -> {
             v.reset();
         });
@@ -66,8 +66,8 @@ public class Store extends JPanel {
      */
     public void exit() {
         setVisible(false);
-        map2.setVisible(true);
-        map2.requestFocusInWindow();
+        map.setVisible(true);
+        map.requestFocusInWindow();
     }
 
     public void buy(Product p, Integer n) {

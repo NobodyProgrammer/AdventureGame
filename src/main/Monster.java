@@ -165,7 +165,7 @@ public class Monster extends Property {
 	}
 
 	public void setMonsterProperty() {
-		bloodText = new JLabel("�Ĥ��q");
+		bloodText = new JLabel("blood");
 		bloodText.setSize(100, 50);
 		bloodText.setLocation(1100, 0);
 		bloodText.setForeground(Color.white);
@@ -177,7 +177,7 @@ public class Monster extends Property {
 		blooBar.setForeground(Color.red);
 		blooBar.setSize(200, 30);
 		blooBar.setLocation(1100, 50);
-		attackText = new JLabel("�����O:" + this.attack);
+		attackText = new JLabel("attack:" + this.attack);
 		attackText.setSize(100, 50);
 		attackText.setLocation(1100, 100);
 		attackText.setForeground(Color.white);
