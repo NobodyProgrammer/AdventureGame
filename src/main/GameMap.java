@@ -305,7 +305,6 @@ public class GameMap extends JPanel implements ActionListener {
 			public void run() {
 				if (battle.isOver()) {
 					check_money = backMap();
-					// System.out.println("fuck");
 					listenEnd.cancel();
 					if (check_money > 0 && x != 0) {
 						monster_win[x] = true;
