@@ -3,6 +3,7 @@ package main;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.util.Hashtable;
 import java.util.jar.Attributes.Name;
 
 import javax.swing.ImageIcon;
@@ -11,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 public class Monster extends Property {
-	public JLabel m;
+	public JLabel monster_label;
 	public JProgressBar powerBar;
 	private JPanel battleField;
 	private String name;
@@ -19,6 +20,7 @@ public class Monster extends Property {
 	private int attack;
 	private int money;
 	private int power;
+	private Hashtable<String, Integer> animate_status = new Hashtable<String, Integer>();
 
 	public Monster() {
 
@@ -27,7 +29,13 @@ public class Monster extends Property {
 	public Monster(String name) {
 		// TODO Auto-generated constructor stub
 		this.name = name;
-
+		this.monster_label = new JLabel();
+		this.battleField.add(monster_label);
+		this.animate_status.put("width", 0);
+		this.animate_status.put("height", 0);
+		this.animate_status.put("loc_x", 0);
+		this.animate_status.put("loc_y", 0);
+		this.animate_status.put("count", 0);
 	}
 
 	public void setStatus(int a, int b, int m, int p) {
@@ -38,6 +46,17 @@ public class Monster extends Property {
 
 	}
 
+	public void setSize(int w, int h) {
+		this.animate_status.replace("width", w);
+		this.animate_status.replace("height", h);
+	}
+
+	public void setLoc(int x, int y, int c) {
+		this.animate_status.replace("loc_x", x);
+		this.animate_status.replace("loc_y", y);
+		this.animate_status.replace("count", c);
+	}
+
 	public void setBattleField(JPanel field) {
 		this.battleField = field;
 		setMonsterProperty();
@@ -45,134 +64,22 @@ public class Monster extends Property {
 	}
 
 	public void setMonsterImage(boolean attackFlag) {
-		m = new JLabel();
-		int width = 0;
-		int height = 0;
-		int count = 0;
-		int locY = 0;
-		int locX = 700;
-		switch (name) {
-			case "TA":
-				width = 300;
-				height = 300;
-				count = 0;
-				locY = 300;
-				break;
-			case "skeleton1":
-				width = 500;
-				height = 600;
-				locY = 0;
-				count = 1;
-				break;
-			case "skeleton2":
-				width = 500;
-				height = 600;
-				locY = 0;
-				count = 2;
-				break;
-			case "wizard":
-				width = 200;
-				height = 300;
-				locY = 250;
-				count = 3;
-				break;
-			case "soilder":
-				width = 200;
-				height = 300;
-				locY = 250;
-				count = 4;
-				break;
-			case "archer":
-				width = 200;
-				height = 300;
-				locY = 250;
-				count = 5;
-				break;
-			case "pirate":
-				width = 200;
-				height = 300;
-				locY = 250;
-				count = 6;
-				break;
-
-			default:
-				width = 500;
-				height = 600;
-				locY = 0;
-				count = 2;
-				break;
-		}
+		int width = this.animate_status.get("width");
+		int height = this.animate_status.get("height");
+		int count = this.animate_status.get("count");
+		int locX = this.animate_status.get("loc_x");
+		int locY = this.animate_status.get("loc_y");
 		ImageIcon image2;
-		if (attackFlag) {
-			switch (name) {
-				case "wizard":
-					width = 400;
-					height = 500;
-					locY = 150;
-					break;
-				case "soilder":
-					width = 500;
-					height = 500;
-					locY = 100;
-					locX = 500;
-					break;
-				case "archer":
-					width = 300;
-					height = 300;
-					locY = 250;
-					locX = 700;
-					break;
-				case "pirate":
-					width = 500;
-					height = 300;
-					locY = 250;
-					locX = 550;
-					break;
-
-				default:
-					break;
-			}
+		if (attackFlag)
 			image2 = new ImageIcon("./image/monster/" + count + "fire.gif");
-		} else {
-			switch (name) {
-				case "wizard":
-					width = 250;
-					height = 300;
-					locY = 250;
-					locX = 700;
-					break;
-				case "soilder":
-					width = 250;
-					height = 300;
-					locY = 250;
-					locX = 700;
-					break;
-				case "archer":
-					width = 250;
-					height = 300;
-					locY = 250;
-					locX = 700;
-					break;
-				case "pirate":
-					width = 250;
-					height = 300;
-					locY = 250;
-					locX = 700;
-					break;
-				default:
-					break;
-			}
+		else
 			image2 = new ImageIcon("./image/monster/" + count + ".gif");
-		}
 		image2.setImage(image2.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
-
 		// m.setOpaque(true);
 		// m.setBackground(Color.red);
-		m.setIcon(image2);
-		m.setSize(width, height);
-		m.setLocation(locX, locY);
-		this.battleField.add(m);
-
+		monster_label.setIcon(image2);
+		monster_label.setSize(width, height);
+		monster_label.setLocation(locX, locY);
 	}
 
 	public void setMonsterProperty() {
