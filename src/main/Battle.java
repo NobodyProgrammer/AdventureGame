@@ -12,6 +12,8 @@ import java.util.TimerTask;
 
 import javax.swing.*;
 
+import Items.Decorator.Component;
+
 public class Battle extends JPanel implements ActionListener {
 	private Player player;
 	private Monster monster;
@@ -78,91 +80,21 @@ public class Battle extends JPanel implements ActionListener {
 		if (e.getActionCommand().equals("escape..."))
 			this.endFlag = true;
 		else {
-			int blood;
-			int attack;
 			Y_tempAttack = player.attack;
 			M_tempAttack = monster.getAttack();
 			int n = player.skill.get(e.getActionCommand());
 			n--;
 			player.skill.put(e.getActionCommand(), n);
-			JLabel temp = new JLabel();
-			temp = player.skillWatched.get(e.getActionCommand());
-			temp.setText(Integer.toString(n));
-			player.skillWatched.put(e.getActionCommand(), temp);
-
-			switch (e.getActionCommand()) {
-				case "coffee":
-					blood = player.blooBar.getValue();
-					player.blood = blood + 10;
-					player.blooBar.setValue(blood + 10);
-					allAnnounce.setText("recover 10!");
-					break;
-				case "redBlue":
-					blood = player.blooBar.getMaximum() / 2;
-					player.blood = blood;
-					player.blooBar.setValue(blood);
-					allAnnounce.setText("recover 50%!");
-					break;
-				case "addAttack1":
-
-					attack = (player.attack += 10);
-					player.attackText.setText("attack:" + attack);
-					allAnnounce.setText("attack+10!");
-
-					break;
-				case "addAttack2":
-					player.attack += 20;
-					attack = player.attack;
-					player.attackText.setText("attack:" + attack);
-					allAnnounce.setText("attack+20!");
-					break;
-				case "subAttack":
-					attack = monster.getAttack() - 10;
-					monster.setAttack(attack);
-					monster.attackText.setText("attack:" + attack);
-					allAnnounce.setText("attack-10!");
-					break;
-				case "delayOne":
-					monster.roundDelay = 1;
-					allAnnounce.setText("jump one round!");
-					break;
-				case "special1":
-					if (M_name.equals("archer")) {
-						monster.roundDelay = 2;
-						allAnnounce.setText("jump two round");
-					} else {
-						allAnnounce.setText("not work...");
-					}
-					break;
-				case "special2":
-					if (M_name.equals("soilder")) {
-						blood = monster.getBlood() / 2;
-						monster.setBlood(blood);
-						monster.blooBar.setValue(blood);
-						allAnnounce.setText("succeed!substract the attack");
-					} else {
-						allAnnounce.setText("not work...");
-					}
-					break;
-				case "special3":
-					if (M_name.equals("skeleton")) {
-						monster.roundDelay = 2;
-						allAnnounce.setText("jump two round");
-					} else {
-						allAnnounce.setText("not work...");
-					}
-					break;
-				case "special4":
-					if (M_name.equals("skeleton1")) {
-						monster.roundDelay = 2;
-						allAnnounce.setText("jump two round!");
-					} else {
-						allAnnounce.setText("not work...");
-					}
-					break;
-				default:
-					allAnnounce.setText("attack!");
-					break;
+			JLabel showRemain = new JLabel();
+			showRemain = player.skillWatched.get(e.getActionCommand());
+			showRemain.setText(Integer.toString(n));
+			player.skillWatched.put(e.getActionCommand(), showRemain);
+			if (player.skillContent.containsKey(e.getActionCommand())) {
+				Component Item = player.skillContent.get(e.getActionCommand());
+				String text = Item.characterEffect(player, monster);
+				allAnnounce.setText(text);
+			} else {
+				allAnnounce.setText("attack!");
 			}
 			for (int i = 0; i < player.skillUse.size(); ++i)
 				// System.out.println(property.skillUse.get(i));
@@ -197,6 +129,7 @@ public class Battle extends JPanel implements ActionListener {
 			playerRound();
 			isWinGame();
 		}
+
 		if (monster.roundDelay > 0) {
 			allAnnounce.setText("can't attack!");
 			try {

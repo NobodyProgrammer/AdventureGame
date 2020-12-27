@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import Items.Decorator.*;
 
 public class Player extends Property {
 	public JLabel p;
@@ -21,6 +22,7 @@ public class Player extends Property {
 
 	public Hashtable<String, Integer> skill = new Hashtable<String, Integer>();
 	public Hashtable<String, JLabel> skillWatched = new Hashtable<String, JLabel>();
+	public Hashtable<String, Component> skillContent = new Hashtable<String, Component>();
 	private Timer playerIdel = new Timer();
 	public int playerImageNum = 0;
 	public String playerPath = "./image/player/player0";
@@ -35,7 +37,6 @@ public class Player extends Property {
 		setPlayerProperty();
 		// System.out.println(pStatus.skill.get("coffee"));
 		newskillButton();
-
 		playerIdel.schedule(new TimerTask() {
 
 			@Override
@@ -69,6 +70,7 @@ public class Player extends Property {
 		money = s.getMoney();
 
 		this.skill = s.skill;
+		this.skillContent = s.skillContent;
 
 	}
 
@@ -119,5 +121,4 @@ public class Player extends Property {
 		});
 
 	}
-
 }

@@ -30,7 +30,7 @@ public class Monster extends Property {
 		// TODO Auto-generated constructor stub
 		this.name = name;
 		this.monster_label = new JLabel();
-		this.battleField.add(monster_label);
+
 		this.animate_status.put("width", 0);
 		this.animate_status.put("height", 0);
 		this.animate_status.put("loc_x", 0);
@@ -80,6 +80,7 @@ public class Monster extends Property {
 		monster_label.setIcon(image2);
 		monster_label.setSize(width, height);
 		monster_label.setLocation(locX, locY);
+		this.battleField.add(monster_label);
 	}
 
 	public void setMonsterProperty() {
@@ -133,8 +134,8 @@ public class Monster extends Property {
 		return this.power;
 	}
 
-	public void setAttack(int a) {
-		this.attack = a;
+	public void setAttack(double a) {
+		this.attack = (int) a;
 	}
 
 	public void updateMoney(int m) {

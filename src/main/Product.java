@@ -3,18 +3,22 @@ package main;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import Items.Decorator.*;
+import Items.Decorator.Component;
 
 public class Product extends JPanel {
     private JLabel name, price;
     private JButton buy;
     private JSpinner amount;
     private Store container;
+    private Component content;
 
-    public Product(String n, Integer p, Store s) {
+    public Product(String n, Integer p, Component con, Store s) {
         name = new JLabel(n);
         price = new JLabel(p.toString());
         amount = new JSpinner(new SpinnerNumberModel(0, 0, 99, 1));
         amount.setMaximumSize(new Dimension(100, 25));
+        this.content = con;
         container = s;
 
         buy = new JButton("Buy");
@@ -82,16 +86,7 @@ public class Product extends JPanel {
     }
 
     private void buy(Integer n) {
-        container.buy(this, n);
+        container.buy(this, n, this.content);
     }
 
-    public static void main(String[] args) {
-        JFrame j = new JFrame("Product test");
-        j.setLayout(new FlowLayout());
-        j.setSize(400, 400);
-        j.add(new Product("NN1", 123, null));
-        j.add(new Product("NN2", 123, null));
-        j.setVisible(true);
-        j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
 }

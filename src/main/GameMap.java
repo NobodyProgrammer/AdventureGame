@@ -36,9 +36,7 @@ public class GameMap extends JPanel implements ActionListener {
 	ImageIcon left_2 = new ImageIcon("./image/MapPlayer/left2.png");
 	ImageIcon left_3 = new ImageIcon("./image/MapPlayer/left3.png");
 	private Status MyPlayer;
-	private Timer listenEnd = new Timer();
 	private JFrame mainField;
-	private int Mymoney;
 	private Battle battle;
 	private Store st;
 	private boolean monster_win[] = new boolean[7];
