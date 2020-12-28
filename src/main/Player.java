@@ -16,10 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import Items.Decorator.*;
 
-public class Player extends Property {
+public class Player {
 	public JLabel p;
 	public ArrayList<JButton> skillUse = new ArrayList<JButton>();
-
 	public Hashtable<String, Integer> skill = new Hashtable<String, Integer>();
 	public Hashtable<String, JLabel> skillWatched = new Hashtable<String, JLabel>();
 	public Hashtable<String, Component> skillContent = new Hashtable<String, Component>();
@@ -29,6 +28,15 @@ public class Player extends Property {
 	public int playerWidth = 150;
 	public int playerHeight = 300;
 	private int i = 0;
+	protected JPanel battleField;
+	public int attack;
+	public int blood;
+	public int money;
+	public JLabel bloodText;
+	public JLabel attackText;
+	public JProgressBar blooBar;
+	public Status status;
+	public int roundDelay = 0;
 
 	public Player(JPanel fieldJPanel, Status pStatus) {
 		// TODO Auto-generated constructor stub
@@ -65,9 +73,9 @@ public class Player extends Property {
 		// player.setOpaque(true);
 		// player.setBackground(Color.red);
 		battleField.add(p);
-		attack = s.attack;
-		blood = s.blood;
-		money = s.getMoney();
+		this.attack = s.attack;
+		this.blood = s.blood;
+		this.money = s.getMoney();
 
 		this.skill = s.skill;
 		this.skillContent = s.skillContent;

@@ -20,8 +20,10 @@ public class Bomb extends Component {
 
     public String characterEffect(Player p, Monster m) {
         double value = 10 * item.getAddition();
-        m.setAttack(m.getAttack() - value);
-        m.attackText.setText("attack:" + m.getAttack());
+        double attack = m.getProperty("attack");
+        m.setProperty("attack", (int) (attack - value));
+
+        m.attackText.setText("attack:" + attack);
         return "monster attack-" + Double.toString(value);
     }
 

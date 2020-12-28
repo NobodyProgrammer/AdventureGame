@@ -11,15 +11,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
-public class Monster extends Property {
-	public JLabel monster_label;
+public class Monster {
+	public JLabel monster_label = new JLabel();;
+	public JLabel bloodText;
+	public JLabel attackText;
 	public JProgressBar powerBar;
-	private JPanel battleField;
+	public JProgressBar blooBar;
 	private String name;
-	private int blood;
-	private int attack;
-	private int money;
-	private int power;
+	protected JPanel battleField;
+	public int roundDelay = 0;
+	private Hashtable<String, Integer> property = new Hashtable<String, Integer>();
 	private Hashtable<String, Integer> animate_status = new Hashtable<String, Integer>();
 
 	public Monster() {
@@ -29,8 +30,6 @@ public class Monster extends Property {
 	public Monster(String name) {
 		// TODO Auto-generated constructor stub
 		this.name = name;
-		this.monster_label = new JLabel();
-
 		this.animate_status.put("width", 0);
 		this.animate_status.put("height", 0);
 		this.animate_status.put("loc_x", 0);
@@ -39,10 +38,10 @@ public class Monster extends Property {
 	}
 
 	public void setStatus(int a, int b, int m, int p) {
-		this.attack = a;
-		this.blood = b;
-		this.money = m;
-		this.power = p;
+		this.property.put("attack", a);
+		this.property.put("blood", b);
+		this.property.put("power", p);
+		this.property.put("money", m);
 
 	}
 
@@ -59,8 +58,10 @@ public class Monster extends Property {
 
 	public void setBattleField(JPanel field) {
 		this.battleField = field;
+		this.battleField.add(monster_label);
 		setMonsterProperty();
 		setMonsterImage(false);
+
 	}
 
 	public void setMonsterImage(boolean attackFlag) {
@@ -69,34 +70,35 @@ public class Monster extends Property {
 		int count = this.animate_status.get("count");
 		int locX = this.animate_status.get("loc_x");
 		int locY = this.animate_status.get("loc_y");
-		ImageIcon image2;
+		ImageIcon monster_img;
+		System.out.println(count);
 		if (attackFlag)
-			image2 = new ImageIcon("./image/monster/" + count + "fire.gif");
+			monster_img = new ImageIcon("./image/monster/" + count + "fire.gif");
 		else
-			image2 = new ImageIcon("./image/monster/" + count + ".gif");
-		image2.setImage(image2.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+			monster_img = new ImageIcon("./image/monster/" + count + ".gif");
+		monster_img.setImage(monster_img.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
 		// m.setOpaque(true);
 		// m.setBackground(Color.red);
-		monster_label.setIcon(image2);
+		monster_label.setIcon(monster_img);
 		monster_label.setSize(width, height);
 		monster_label.setLocation(locX, locY);
-		this.battleField.add(monster_label);
+
 	}
 
-	public void setMonsterProperty() {
+	private void setMonsterProperty() {
 		bloodText = new JLabel("blood");
 		bloodText.setSize(100, 50);
 		bloodText.setLocation(1100, 0);
 		bloodText.setForeground(Color.white);
 		bloodText.setFont(new Font("dialog", 1, 20));
 		blooBar = new JProgressBar();
-		blooBar.setMaximum(this.blood);
+		blooBar.setMaximum(this.property.get("blood"));
 		blooBar.setMinimum(0);
-		blooBar.setValue(this.blood);
+		blooBar.setValue(this.property.get("blood"));
 		blooBar.setForeground(Color.red);
 		blooBar.setSize(200, 30);
 		blooBar.setLocation(1100, 50);
-		attackText = new JLabel("attack:" + this.attack);
+		attackText = new JLabel("attack:" + this.property.get("attack"));
 		attackText.setSize(100, 50);
 		attackText.setLocation(1100, 100);
 		attackText.setForeground(Color.white);
@@ -104,7 +106,7 @@ public class Monster extends Property {
 		powerBar = new JProgressBar();
 		powerBar.setMaximum(5);
 		powerBar.setMinimum(0);
-		powerBar.setValue(this.power);
+		powerBar.setValue(this.property.get("power"));
 		powerBar.setForeground(Color.yellow);
 		powerBar.setLocation(1100, 150);
 		powerBar.setSize(200, 20);
@@ -118,35 +120,11 @@ public class Monster extends Property {
 		return this.name;
 	}
 
-	public int getAttack() {
-		return this.attack;
+	public int getProperty(String name) {
+		return this.property.get(name);
 	}
 
-	public int getMoney() {
-		return this.money;
-	}
-
-	public int getBlood() {
-		return this.blood;
-	}
-
-	public int getPower() {
-		return this.power;
-	}
-
-	public void setAttack(double a) {
-		this.attack = (int) a;
-	}
-
-	public void updateMoney(int m) {
-		this.money = m;
-	}
-
-	public void setBlood(int b) {
-		this.blood = b;
-	}
-
-	public void setPower(int p) {
-		this.power = p;
+	public void setProperty(String name, int v) {
+		this.property.put(name, v);
 	}
 }
