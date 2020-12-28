@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -12,42 +13,20 @@ import Factory.*;
 public class GameMap extends JPanel implements ActionListener {
 	private int person_x = 750;
 	private int person_y = 280;
-	public JLabel character;
-	public JLabel skeleton1;
-	public JLabel skeleton2;
-	public JLabel wizard;
-	public JLabel soldier;
-	public JLabel archer;
-	public JLabel pirate;
-	int x_up = 0;
-	int x_lower = 0;
-	int y_up = 0;
-	int y_lower = 0;
-	ImageIcon down_1 = new ImageIcon("./image/MapPlayer/front1.png");
-	ImageIcon down_2 = new ImageIcon("./image/MapPlayer/front2.png");
-	ImageIcon down_3 = new ImageIcon("./image/MapPlayer/front3.png");
-	ImageIcon up_1 = new ImageIcon("./image/MapPlayer/back1.png");
-	ImageIcon up_2 = new ImageIcon("./image/MapPlayer/back2.png");
-	ImageIcon up_3 = new ImageIcon("./image/MapPlayer/back3.png");
-	ImageIcon right_1 = new ImageIcon("./image/MapPlayer/right1.png");
-	ImageIcon right_2 = new ImageIcon("./image/MapPlayer/right2.png");
-	ImageIcon right_3 = new ImageIcon("./image/MapPlayer/right3.png");
-	ImageIcon left_1 = new ImageIcon("./image/MapPlayer/left1.png");
-	ImageIcon left_2 = new ImageIcon("./image/MapPlayer/left2.png");
-	ImageIcon left_3 = new ImageIcon("./image/MapPlayer/left3.png");
+	private int check_money = 0;
+	private int count_boss = 0;
+	private boolean monster_win[] = new boolean[7];
+	private JLabel[] monster = new JLabel[6];
+	private JLabel character;
 	private Status MyPlayer;
 	private JFrame mainField;
 	private Battle battle;
 	private Store st;
-	private boolean monster_win[] = new boolean[7];
-	private int check_money = 0;
-	private int count_boss = 0;
-
-	// public JLabel dame_over = new JLabel();
 
 	public GameMap(JFrame jFrame, Status p) {
-		for (int i = 0; i < 7; ++i) {
+		for (int i = 0; i < 6; ++i) {
 			monster_win[i] = false;
+			this.monster[i] = new JLabel();
 		}
 		this.mainField = jFrame;
 		this.MyPlayer = p;
@@ -58,7 +37,6 @@ public class GameMap extends JPanel implements ActionListener {
 		storeEntry();
 		bag_button();
 		newBackground();
-
 		this.setLayout(null);
 		this.setKeyBoardListener();
 		setFocusable(true);
@@ -68,42 +46,27 @@ public class GameMap extends JPanel implements ActionListener {
 	}
 
 	private void characterLoc() {
-		ImageIcon sk1_img = new ImageIcon("./image/Monster/1.gif");
-		ImageIcon sk2_img = new ImageIcon("./image/Monster/2.gif");
-		ImageIcon wizard_img = new ImageIcon("./image/Monster/3.gif");
-		ImageIcon soldier_img = new ImageIcon("./image/Monster/4.gif");
-		ImageIcon archer_img = new ImageIcon("./image/Monster/5.gif");
-		ImageIcon pirate_img = new ImageIcon("./image/Monster/6.gif");
-		sk1_img.setImage(sk1_img.getImage().getScaledInstance(250, 162, Image.SCALE_DEFAULT));
-		sk2_img.setImage(sk2_img.getImage().getScaledInstance(250, 162, Image.SCALE_DEFAULT));
-		skeleton1 = new JLabel(sk1_img);
-		skeleton2 = new JLabel(sk2_img);
-		wizard = new JLabel(wizard_img);
-		soldier = new JLabel(soldier_img);
-		archer = new JLabel(archer_img);
-		pirate = new JLabel(pirate_img);
-		skeleton1.setSize(200, 160);
-		skeleton2.setSize(200, 160);
-		wizard.setSize(200, 160);
-		soldier.setSize(200, 160);
-		archer.setSize(200, 160);
-		pirate.setSize(200, 160);
-		skeleton1.setLocation(500, 80);
-		skeleton2.setLocation(40, 60);
-		wizard.setLocation(280, 490);
-		soldier.setLocation(270, 0);
-		archer.setLocation(950, 450);
-		pirate.setLocation(570, 500);
-		character = new JLabel(down_1);
+
+		for (int i = 0; i < 6; ++i) {
+			ImageIcon img = new ImageIcon("./image/Monster/" + (i + 1) + ".gif");
+			if (i <= 1) {
+				img.setImage(img.getImage().getScaledInstance(250, 162, Image.SCALE_DEFAULT));
+			}
+			this.monster[i] = new JLabel(img);
+			this.monster[i].setSize(200, 160);
+			this.add(monster[i]);
+		}
+
+		this.monster[0].setLocation(500, 80);
+		this.monster[1].setLocation(40, 60);
+		this.monster[2].setLocation(280, 490);
+		this.monster[3].setLocation(270, 0);
+		this.monster[4].setLocation(950, 450);
+		this.monster[5].setLocation(570, 500);
+		character = new JLabel(new ImageIcon("./image/MapPlayer/front1.png"));
 		character.setSize(60, 70);
 		character.setLocation(person_x, person_y);
 		this.add(character);
-		this.add(skeleton1);
-		this.add(skeleton2);
-		this.add(wizard);
-		this.add(soldier);
-		this.add(archer);
-		this.add(pirate);
 		this.requestFocusInWindow();
 
 	}
@@ -120,6 +83,10 @@ public class GameMap extends JPanel implements ActionListener {
 	}
 
 	private void setKeyBoardListener() {
+		ImageIcon down_1 = new ImageIcon("./image/MapPlayer/front1.png");
+		ImageIcon up_1 = new ImageIcon("./image/MapPlayer/back1.png");
+		ImageIcon right_1 = new ImageIcon("./image/MapPlayer/right1.png");
+		ImageIcon left_1 = new ImageIcon("./image/MapPlayer/left1.png");
 		this.addKeyListener(new KeyListener() {
 			public void keyPressed(KeyEvent e) {
 				// System.out.println(e.getKeyChar());
@@ -306,19 +273,7 @@ public class GameMap extends JPanel implements ActionListener {
 					listenEnd.cancel();
 					if (check_money > 0 && x != 0) {
 						monster_win[x] = true;
-
-						if (x == 1)
-							skeleton1.setVisible(false);
-						else if (x == 2)
-							skeleton2.setVisible(false);
-						else if (x == 3)
-							wizard.setVisible(false);
-						else if (x == 4)
-							soldier.setVisible(false);
-						else if (x == 5)
-							archer.setVisible(false);
-						else if (x == 6)
-							pirate.setVisible(false);
+						monster[x].setVisible(false);
 						++count_boss;
 					}
 				}
